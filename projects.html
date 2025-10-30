@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kanupriya — Projects</title>
+
+  <!-- main stylesheet & icons (uses your theme variables) -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ===== Page wrapper ===== */
+    .page-wrapper { max-width: 1100px; margin: 5.6rem auto 4rem; padding: 0 1rem; }
+    .page-header { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+    .page-header h1 { margin:0; font-size:1.45rem; color:var(--text-color); }
+    .page-sub { color:var(--subtext-color); margin:0.25rem 0 0 0; }
+
+    /* ===== Controls ===== */
+    .projects-controls { display:flex; gap:0.75rem; align-items:center; margin-top:0.6rem; flex-wrap:wrap; }
+    .search-input {
+      padding:0.55rem 0.75rem;
+      border-radius:10px;
+      border:1px solid rgba(0,0,0,0.06);
+      background:var(--card-bg);
+      color:var(--text-color);
+      min-width:240px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .tag-filter {
+      display:flex; gap:0.45rem; flex-wrap:wrap;
+      margin-left:0.5rem;
+    }
+    .filter-chip {
+      padding:0.35rem 0.6rem;
+      border-radius:999px;
+      background:var(--tag-bg);
+      color:var(--accent-color);
+      font-weight:600;
+      cursor:pointer;
+      border: none;
+    }
+    .filter-chip.active {
+      background:var(--tag-hover);
+      transform: scale(1.03);
+    }
+
+    /* ===== Projects grid ===== */
+    .projects-grid {
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top:1.25rem;
+    }
+
+    @media (max-width:900px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .search-input { min-width: 160px; }
+    }
+
+    .project-card {
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:1rem;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.03);
+      transition: transform .2s ease, box-shadow .2s ease;
+      display:flex;
+      flex-direction:column;
+      min-height: 160px;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(2,6,23,0.06); }
+
+    .card-top { display:flex; align-items:flex-start; gap:0.8rem; justify-content:space-between; }
+    .project-title { font-size:1.05rem; font-weight:700; color:var(--text-color); margin:0; }
+    .project-meta { color:var(--subtext-color); font-weight:600; font-size:0.92rem; }
+
+    .project-body { margin-top:0.6rem; color:var(--text-color); opacity:0.92; font-size:0.95rem; line-height:1.5; flex:1; }
+
+    .project-tags { margin-top:0.8rem; display:flex; gap:0.45rem; flex-wrap:wrap; }
+    .project-tag {
+      padding:0.32rem 0.6rem;
+      border-radius:999px;
+      background:var(--tag-bg);
+      color:var(--accent-color);
+      font-weight:600;
+      font-size:0.84rem;
+      text-decoration:none;
+      cursor:pointer;
+    }
+    .project-tag:hover { background: var(--tag-hover); transform: scale(1.03); }
+
+    /* action row */
+    .card-actions { display:flex; gap:0.6rem; align-items:center; margin-top:0.8rem; }
+    .btn-small {
+      display:inline-flex; gap:0.5rem; align-items:center;
+      padding:0.45rem 0.75rem; border-radius:10px; border: none;
+      background:transparent; color:var(--accent-color); font-weight:700; cursor:pointer;
+    }
+    .btn-small.view-repo {
+      background:transparent; color:var(--subtext-color); border:1px solid rgba(0,0,0,0.05);
+      padding:0.35rem 0.6rem;
+    }
+    .btn-small.view-repo:hover { color:var(--accent-color); border-color:var(--tag-hover); transform:scale(1.02); }
+
+    /* details block (inside card) */
+    .project-details {
+      margin-top:0.6rem;
+      background: rgba(0,0,0,0.02);
+      padding:0.65rem;
+      border-radius:8px;
+      display:none;
+      color:var(--text-color);
+      font-size:0.92rem;
+    }
+    .project-details.open { display:block; }
+
+    /* small file/list styling */
+    .small-list { margin:0.4rem 0 0 0.9rem; color:var(--text-color); }
+    .small-list li { margin-bottom:0.35rem; }
+
+    /* subtle empty-state */
+    .no-results {
+      text-align:center;
+      color:var(--subtext-color);
+      padding:2rem;
+      background:transparent;
+      border-radius:8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <div class="brand nav-brand">Kanupriya</div>
+
+      <div class="nav-actions">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="experience.html" class="nav-link">Experience</a></li>
+          <li><a href="education.html" class="nav-link">Education</a></li>
+          <li><a href="skills.html" class="nav-link">Skills</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="page-wrapper" role="main">
+    <div class="page-header">
+      <div>
+        <h1>Projects</h1>
+        <div class="page-sub">Academic & research projects, I have done over past years. Repositories are linked where available.</div>
+      </div>
+
+      <div class="projects-controls" aria-hidden="false">
+        <input id="search" class="search-input" type="search" placeholder="Search projects (title, keywords)..." aria-label="Search projects" />
+        <!-- <div class="tag-filter" id="tag-filter" aria-hidden="false"></div> -->
+      </div>
+    </div>
+
+    <section id="projects-grid" class="projects-grid" aria-live="polite" aria-busy="false">
+      <!-- Project cards inserted below -->
+      <!-- 1 -->
+      <article class="project-card" data-title="Adversarial Attacks" data-tags="adversarial,robustness,deep-learning" id="proj-adv">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Adversarial Attacks & Defense Mechanisms</h3>
+            <div class="project-meta">M2 IASD — Course project</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Adversarial-Attacks-" target="_blank" rel="noopener" aria-label="Open GitHub repository"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-adv-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Implemented FGSM & PGD attacks and defenses and evaluated with AutoAttack and experimented with MixedNUTS to improve accuracy–robustness trade-off.
+        </div>
+
+        <div id="proj-adv-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <p style="margin-top:0.3rem;">We implemented white-box attacks (FGSM, PGD), evaluated with AutoAttack, and tested MixedNUTS which is a training-free method to combine standard & robust classifiers.</p>
+
+          <br/>
+          <strong>Key components</strong>
+          <ul class="small-list">
+            <li>Implementations: FGSM, PGD, AutoAttack evaluation.</li>
+            <li>Methods: MixedNUTS for post-hoc classifier mixing.</li>
+            <li>Results: Improved robustness metrics while keeping reasonable clean accuracy.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">adversarial</button>
+          <button class="project-tag">robustness</button>
+          <button class="project-tag">deep-learning</button>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="project-card" data-title="Recommender Systems" data-tags="recommender,matrix-factorization,ncf" id="proj-cf">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Recommender Systems</h3>
+            <div class="project-meta">M2 IASD — Course project</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Recommender-Systems" target="_blank" rel="noopener" aria-label="Open GitHub repository"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-cf-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Built ALS, PMF (Bayesian), and Neural Collaborative Filtering to predict user ratings for movies and tested preprocessing strategies and various postprocessing mapping to rating-scale.
+        </div>
+
+        <div id="proj-cf-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Methods & results</strong>
+          <ul class="small-list">
+            <li>ALS Matrix Factorization — best RMSE: 3.470 (noted in notebook).</li>
+            <li>Probabilistic Matrix Factorization (PMF) — best RMSE: 1.035.</li>
+            <li>Neural Collaborative Filtering (NCF) — best RMSE: 0.879.</li>
+          </ul>
+          
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">recommender</button>
+          <button class="project-tag">matrix-factorization</button>
+          <button class="project-tag">ncf</button>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="project-card" data-title="Gaussian Mixture GANs (GM-GAN)" data-tags="gan,generative,computer-vision" id="proj-gmgan">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Gaussian Mixture GANs (GM-GAN)</h3>
+            <div class="project-meta">M2 IASD — Course project</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Generative-Adversarial-Networks" target="_blank" rel="noopener" aria-label="Open GitHub repository"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-gmgan-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Experiments with Gaussian mixture latent priors and supervised variants to improve sample diversity and quality. We tracked FID / precision / recall.
+        </div>
+
+        <div id="proj-gmgan-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <ul class="small-list">
+            <li>Explored static/dynamic GM priors and EM-based latent reconstructions.</li>
+            <li>Supervised dynamic GM-GAN gave the best balance of FID and inter-class diversity.</li>
+            <li>Visualizations confirm improved per-class quality and variety.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">gan</button>
+          <button class="project-tag">generative</button>
+          <button class="project-tag">computer-vision</button>
+        </div>
+      </article>
+
+      <!-- 4 -->
+      <article class="project-card" data-title="Markov Jump Processes for Chemical Reaction Networks" data-tags="stochastic,markov,mjp" id="proj-mjp">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Markov Jump Processes for Chemical Reaction Networks</h3>
+            <div class="project-meta">M1 — Markov Processes course</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Markov-Jump-Processes-for-Chemical-Reaction-Networks" target="_blank" rel="noopener" aria-label="Open GitHub repository"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-mjp-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Modeled chemical reaction networks using Markov Jump Processes and derived steady-state solutions. We simulated non-homogeneous Poisson-driven reaction rates, and validated numerically.
+        </div>
+
+        <div id="proj-mjp-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <ul class="small-list">
+            <li>Mathematical derivation of MJP framework for reaction networks.</li>
+            <li>Incorporated non-homogeneous Poisson processes to model time-varying rates.</li>
+            <li>Simulated and compared numerical results with theoretical expectations.</li>
+          </ul>
+          
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">stochastic processes</button>
+          <button class="project-tag">markov jump processes</button>
+          <button class="project-tag">Probability</button>
+        </div>
+      </article>
+
+      <!-- 5 -->
+      <article class="project-card" data-title="DAME-BS: Differentially Private Mean Estimation via Binary Search" data-tags="differential-privacy,ldp,algorithms" id="proj-damebs">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">DAME-BS — Differentially Private Mean Estimation using Binary Search</h3>
+            <div class="project-meta">Internship -  Criteo AI Labs</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/DAME-BS" target="_blank" rel="noopener" aria-label="Open GitHub repository for DAME-BS"><i class="fab fa-github"></i> Repo</a>
+            <a class="btn-small" href="https://kanu2406.github.io/DAME-BS/" target="_blank" rel="noopener" aria-label="Open DAME-BS documentation">Docs</a>
+            <button class="btn-small details-toggle" data-target="proj-damebs-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Worked on algorithm DAME-BS for mean estimation under user-level Local Differential Privacy (LDP) and implemented it in python. 
+          The algorithm has two phases: Localization via private binary search + Estimation via noisy projection & averaging. It also includes theoretical bounds and experiments across distributions.
+        </div>
+
+        <div id="proj-damebs-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <ul class="small-list">
+            <li>Localization phase: private binary search to find an interval for the mean.</li>
+            <li>Estimation phase: projection + Laplacian noise and averaging for final estimate.</li>
+            <li>Includes upper bound proofs and empirical evaluation across distributions.</li>
+          </ul>
+          
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">differential-privacy</button>
+          <button class="project-tag">privacy</button>
+          <button class="project-tag">algorithms</button>
+          <button class="project-tag">mean-estimation</button>
+        </div>
+      </article>
+
+      <!-- 6 -->
+      <article class="project-card" data-title="Data Acquisition, Extraction & Storage Project" data-tags="etl,grobid,arxiv,datapipeline" id="proj-dataacq">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Data Acquisition, Extraction & Storage</h3>
+            <div class="project-meta">M2 IASD — Course Project</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Data_Acquisition_Extraction_and_Storage" target="_blank" rel="noopener" aria-label="Open GitHub repository for data acquisition project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-dataacq-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          This project focuses on acquiring, extracting, restructuring, cleaning, and storing scholarly article data to produce a clean, well-structured dataset suitable for 
+          downstream applications (e.g., training classifiers, building interfaces). We specifically target academic research papers on optimization from arXiv 
+          and employ GROBID to extract full-text sections and references.
+        </div>
+
+        <div id="proj-dataacq-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Pipeline steps</strong>
+          <ul class="small-list">
+            <li>arXiv API → metadata & PDF links.</li>
+            <li>PDF → GROBID → TEI XML → parse sections, references.</li>
+            <li>Transform: normalize dates, clean keywords, dedupe titles; store in SQLite (Articles, Sections, References).</li>
+          </ul>
+          <strong>Tools</strong>
+          <p style="margin-top:0.3rem;">Python, requests, GROBID (v0.7.2), SQLite3, XML parsing.</p>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">grobid</button>
+          <button class="project-tag">arxiv</button>
+          <button class="project-tag">XML</button>      
+        </div>
+      </article>
+
+      <!-- 15 -->
+      <article class="project-card" data-title="Study of Active Learning Algorithms" data-tags="active-learning,classification,internship" id="proj-activelearning">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Study of Active Learning Algorithms</h3>
+            <div class="project-meta">Internship — LPSM, Sorbonne Université</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Internship-in-Active-Learning-Algorithms" target="_blank" rel="noopener" aria-label="Open GitHub repository for Active Learning project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-activelearning-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          This project focuses on the study and implementation of various Active Learning Algorithms for binary classification problems.
+          Studied and implemented three Active Learning methods for binary classification — Active Learning with Rejection, Uncertainty Sampling, and Query by Committee. 
+          based on a paper by my supervisor Prof Christophe Denis. These were all implemented from scratch and benchmarked against passive and Bayes classifiers.These were 
+          all implemented from scratch and benchmarked against passive and Bayes classifiers.
+        </div>
+
+        <div id="proj-activelearning-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <ul class="small-list">
+            <li>Goal: minimize labeled data needs by selecting the most informative samples.</li>
+            <li>Implemented from scratch based on research paper by Prof. Christophe Denis.</li>
+            <li>Methods: 
+              <ul style="margin-top:0.2rem;">
+                <li>Active Learning with Rejection</li>
+                <li>Uncertainty Sampling</li>
+                <li>Query By Committee (QBC)</li>
+              </ul>
+            </li>
+            <li>Evaluated on both synthetic and real-world datasets, compared to passive learning and Bayes classifiers.</li>
+            <li>Included theoretical discussion of Empirical Risk Minimization (ERM) in active vs. passive settings.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">active-learning</button>
+          <button class="project-tag">classification</button>
+        </div>
+      </article>
+
+
+      <!-- 8 -->
+      <article class="project-card" data-title="Research Article Replication — SAX & Time Series" data-tags="time-series,sax,replication" id="proj-replication">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Research Article Replication — SAX (Symbolic Representation)</h3>
+            <div class="project-meta">M2 IASD- Course Project</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/SAX-Symbolic-Aggregate-approXimation-" target="_blank" rel="noopener" aria-label="Open GitHub repository for SAX replication"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-replication-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+         This project is a replication study for the seminal research paper "A Symbolic Representation of Time Series, 
+         with Implications for Streaming Algorithms", which introduced the SAX (Symbolic Aggregate approXimation) algorithm.
+        </div>
+
+        <div id="proj-replication-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <br/>
+          <p>The core of this project was to:</p>
+          <ul class="small-list">
+            <li>Summarizing the paper and implement the SAX algorithm from scratch, including Z-normalization, 
+              Piecewise Aggregate Approximation (PAA), and symbolic discretization</li>
+            <li>Attempt to reproduce the experimental validation claims from the original paper across several 
+              key data mining taskslike clustering, classification, motif discovery, anomaly detection.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">time-series</button>
+          <button class="project-tag">sax</button>
+          <button class="project-tag">replication</button>
+        </div>
+      </article>
+
+      <!-- 9 -->
+      <article class="project-card" data-title="Monte Carlo Search and Games — Teen Do Paanch" data-tags="mcts,games,reinforcement-learning" id="proj-mcsearch">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Monte Carlo Search & Games — Teen Do Paanch</h3>
+            <div class="project-meta">M2 IASD- Course Project</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Monte-Carlo-Search-and-Games" target="_blank" rel="noopener" aria-label="Open GitHub repository for Monte Carlo search project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-mcsearch-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Explored performance of MCTS variants and determinization techniques for the Indian trick-taking game Teen Do Paanch: flat Monte Carlo, UCT, Sequential Halving, and imperfect-information strategies.
+        </div>
+
+        <div id="proj-mcsearch-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <br/>
+          <p>A complete simulation environment for a simplified 3-player version of TDP was built . 
+            The project then evaluated several decision-making algorithms under three distinct experimental setups:</p>
+          <ul class="small-list">
+            <li>Perfect-information baselines: flat MC, UCT/UCT variants, sequential halving.</li>
+            <li>Imperfect-information: random determinization & inference-based sampling.</li>
+            <li>Self-Play: Algorithms compete against each other.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">mcts</button>
+          <button class="project-tag">games</button>
+          <button class="project-tag">reinforcement-learning</button>
+        </div>
+      </article>
+
+      <!-- 10 -->
+      <article class="project-card" data-title="Exploring Euclidean & Non-Euclidean Geometry" data-tags="geometry,math,report" id="proj-geometry">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Exploring Euclidean & Non-Euclidean Geometry</h3>
+            <div class="project-meta">B.Sc. project — report & presentation</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Euclidean-and-Non-Euclidean-Geometry" target="_blank" rel="noopener" aria-label="Open repository for geometry project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-geometry-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          Historical & mathematical study of Euclidean vs non-Euclidean geometries (spherical, hyperbolic), geodesics, triangle areas, and applications (navigation, cosmology, hyperbolic neural nets).
+        </div>
+
+        <div id="proj-geometry-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <ul class="small-list">
+            <li>Euclid’s postulates and the parallel postulate alternatives.</li>
+            <li>Spherical & hyperbolic geometry basics, geodesics and triangle area formulas.</li>
+            <li>Applications to neural networks, cosmology and navigation.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">hyperbolic-geometry</button>
+          <button class="project-tag">spherical-geometry</button>
+          <button class="project-tag">euclidean-non-euclidean-geometry</button>
+
+        </div>
+      </article>
+
+      <!-- 11 -->
+      <article class="project-card" data-title="Linear Time Series Assignment (Industrial Production Forecasting)" data-tags="time-series,arima,forecasting" id="proj-timeseries">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Linear Time Series Assignment — Industrial Production Forecasting</h3>
+            <div class="project-meta">Time series analysis — ARIMA, tests & forecasts</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Linear-Time-Series-Assignment" target="_blank" rel="noopener" aria-label="Open GitHub repository for time series project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-timeseries-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          This project focuses on the analysis and forecasting of a time series dataset, specifically the industrial production 
+          indices for ornamental and construction stones, industrial limestone, gypsum, chalk, and slate.
+        </div>
+
+        <div id="proj-timeseries-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <br/>
+          <p>The main steps involved in this project are:</p>
+          <ul class="small-list">
+            <li>ADF & KPSS stationarity checks, decomposition & seasonal adjustment.</li>
+            <li>ARIMA model selection via AIC/BIC and Ljung-Box residual checks.</li>
+            <li>Forecasts with 95% intervals and Granger causality tests.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">time-series</button>
+          <button class="project-tag">arima</button>
+          <button class="project-tag">forecasting</button>
+          <button class="project-tag">causality</button>
+        </div>
+      </article>
+
+      
+
+        <!-- 13 -->
+        <article class="project-card" data-title="Airbnb Price Prediction (NYC 2019)" data-tags="regression,xgboost,feature-engineering" id="proj-airbnb">
+          <div class="card-top">
+            <div>
+              <h3 class="project-title">Airbnb Price Prediction — NYC (2019)</h3>
+              <div class="project-meta">Regression models & feature analysis</div>
+            </div>
+            <div class="card-actions">
+              <a class="btn-small view-repo" href="https://github.com/kanu2406/AirBnb-Price-Prediction" target="_blank" rel="noopener" aria-label="Open GitHub repository for Airbnb price prediction"><i class="fab fa-github"></i> Repo</a>
+              <button class="btn-small details-toggle" data-target="proj-airbnb-details" aria-expanded="false">Details</button>
+            </div>
+          </div>
+
+          <div class="project-body">
+            This project aims to predict the prices of Airbnb listings in New York City (NYC) using various regression techniques like 
+            Ridge/LASSO, decision trees, AdaBoost, XGBoost and neural networks. . By exploring the relationships between these features and the listing prices, we hope to develop accurate predictive models and identify the most influential factors affecting Airbnb pricing.
+          </div>
+
+          <div id="proj-airbnb-details" class="project-details" role="region" aria-hidden="true">
+            <strong>Summary</strong>
+            <br/>
+            <p>The main steps involved in this project are:</p>
+            <ul class="small-list">
+              <li>Apply different regression algorithms to model and predict listing prices.</li>
+              <li>Compare the performance of these algorithms based on evaluation metrics.</li>
+              <li>Investigate the most influential features affecting price prediction.</li>
+            </ul>
+          </div>
+
+          <div class="project-tags" aria-hidden="true">
+            <button class="project-tag">regression</button>
+            <button class="project-tag">xgboost</button>
+            <button class="project-tag">feature-engineering</button>
+          </div>
+        </article>
+
+      
+
+      <!-- 14 -->
+      <article class="project-card" data-title="Steepest Descent Method for Optimization" data-tags="optimization,gradient-descent,algorithms" id="proj-steepest">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Steepest Descent Method for Optimization</h3>
+            <div class="project-meta">M1 coursework — optimization experiments</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Optimization-Project" target="_blank" rel="noopener" aria-label="Open GitHub repository for steepest descent project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-steepest-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+        <div class="project-body">
+          This project focuses on the implementation and analysis of the steepest descent method for finding minima of two well-known mathematical functions: Rosenbrock's function and Himmelblau's function. 
+          We studied step-size strategies (constant, Goldstein-Armijo, Wolfe-Powell) and convergence behavior.
+        </div>
+
+        <div id="proj-steepest-details" class="project-details" role="region" aria-hidden="true">
+          <strong>Summary</strong>
+          <br/> 
+          <p>The main steps involved in this project are:</p>
+          <ul class="small-list">
+            <li>Employing the method iteratively and analyzing how the algorithm navigates the function landscape and approaches local minima.</li>
+            <li>We noted step-size sensitivity and how starting point influences convergence speed.</li>
+            <li>Compared of line-search strategies and studied empirical convergence plots.</li>
+          </ul>
+        </div>
+
+        <div class="project-tags" aria-hidden="true">
+          <button class="project-tag">optimization</button>
+          <button class="project-tag">gradient-descent</button>
+          <button class="project-tag">algorithms</button>
+        </div>
+      </article>
+
+      <!-- 12 -->
+      <article class="project-card" data-title="Spotify Song Likability Prediction" data-tags="classification,k-means,logistic-regression" id="proj-spotify">
+        <div class="card-top">
+          <div>
+            <h3 class="project-title">Spotify Song Likability Prediction</h3>
+            <div class="project-meta">Logistic regression & K-Means — from-scratch implementations</div>
+          </div>
+          <div class="card-actions">
+            <a class="btn-small view-repo" href="https://github.com/kanu2406/Spotify-Song-Likability-Prediction-Project" target="_blank" rel="noopener" aria-label="Open GitHub repository for Spotify project"><i class="fab fa-github"></i> Repo</a>
+            <button class="btn-small details-toggle" data-target="proj-spotify-details" aria-expanded="false">Details</button>
+          </div>
+        </div>
+
+          <div class="project-body">
+            This was one of my very initial projects of ML and the aim of this project was to predict song likability using a logistic regression and K-Means clustering (implemented from scratch). 
+            The goal is to explore the dataset, preprocess it, and develop a predictive model using Logistic Regression to determine song likability 
+            based on features like liveliness, acoustics, and energy.
+          </div>
+
+          <div id="proj-spotify-details" class="project-details" role="region" aria-hidden="true">
+            <strong>Summary</strong>
+            <br/>
+            <p>The main steps involved in this project are:</p>
+            <ul class="small-list">
+              <li>Data cleaning, feature scaling and EDA (danceability, energy, loudness, speechiness).</li>
+              <li>K-Means cluster for song grouping and logistic regression implemention for prediction.</li>
+              <li>Model evaluation: confusion matrix and accuracy.</li>
+            </ul>
+          </div>
+
+          <div class="project-tags" aria-hidden="true">
+            <button class="project-tag">classification</button>
+            <button class="project-tag">k-means</button>
+            <button class="project-tag">logistic-regression</button>
+          </div>
+        </article>
+
+
+
+
+    </section>
+
+    <div id="no-results" class="no-results" style="display:none;">No projects match your search or selected tag.</div>
+
+    <div style="margin-top:1.6rem; color:var(--subtext-color); font-size:0.95rem;">
+      <a href="index.html" style="color:var(--accent-color); text-decoration:none;">← Back to home</a>
+    </div>
+  </main>
+
+  <!-- page-specific JS for search, filters and details toggles -->
+  <script>
+    (function () {
+      const search = document.getElementById('search');
+      const grid = document.getElementById('projects-grid');
+      const cards = Array.from(grid.querySelectorAll('.project-card'));
+      const tagFilterContainer = document.getElementById('tag-filter');
+      const noResults = document.getElementById('no-results');
+
+      // gather unique tags from cards (data-tags or buttons)
+      const tagSet = new Set();
+      cards.forEach(card => {
+        const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+        tags.forEach(t => tagSet.add(t));
+      });
+
+      // create filter chips
+      Array.from(tagSet).sort().forEach(tag => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-chip';
+        btn.type = 'button';
+        btn.textContent = tag;
+        btn.dataset.tag = tag;
+        tagFilterContainer.appendChild(btn);
+      });
+
+      // search + filter state
+      let activeTag = null;
+
+      function normalizeText(s) { return (s || '').toString().toLowerCase(); }
+
+      function updateVisibility() {
+        const q = normalizeText(search.value);
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const title = normalizeText(card.dataset.title);
+          const tags = (card.dataset.tags || '').toLowerCase();
+          const body = normalizeText(card.querySelector('.project-body')?.textContent);
+          const matchesQuery = q === '' || title.includes(q) || body.includes(q) || tags.includes(q);
+
+          const matchesTag = !activeTag || tags.split(',').map(t=>t.trim()).includes(activeTag);
+
+          const show = matchesQuery && matchesTag;
+          card.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? '' : 'none';
+      }
+
+      // search handler
+      search.addEventListener('input', updateVisibility);
+
+      // tag filter handler (delegation)
+      tagFilterContainer.addEventListener('click', (e) => {
+        if (!e.target.matches('.filter-chip')) return;
+        const btn = e.target;
+        const tag = btn.dataset.tag;
+
+        // toggle
+        if (activeTag === tag) {
+          activeTag = null;
+          btn.classList.remove('active');
+        } else {
+          // clear other active
+          tagFilterContainer.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTag = tag;
+        }
+        updateVisibility();
+      });
+
+      // tags inside cards can also act as filters
+      grid.addEventListener('click', (e) => {
+        if (e.target.matches('.project-tag')) {
+          const tagText = e.target.textContent.trim();
+          // find corresponding chip and simulate click
+          const chip = Array.from(tagFilterContainer.querySelectorAll('.filter-chip')).find(c => c.dataset.tag === tagText);
+          if (chip) chip.click();
+        }
+      });
+
+      // details toggle buttons
+      grid.addEventListener('click', (e) => {
+        if (!e.target.matches('.details-toggle')) return;
+        const btn = e.target;
+        const targetId = btn.dataset.target;
+        const details = document.getElementById(targetId);
+        if (!details) return;
+        const isOpen = details.classList.toggle('open');
+        details.setAttribute('aria-hidden', (!isOpen).toString());
+        btn.setAttribute('aria-expanded', isOpen.toString());
+        btn.textContent = isOpen ? 'Hide details' : 'Details';
+      });
+
+      // init
+      updateVisibility();
+    })();
+  </script>
+
+  <!-- site-wide script (theme toggle, etc.) -->
+  <script src="script.js"></script>
+   <!-- Robust details toggle (put inside your existing DOMContentLoaded or at end of body) -->
+<script>
+// Use delegation so this works for dynamic content too
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.details-toggle');
+  if (!btn) return;
+
+  const targetId = btn.dataset.target;
+  if (!targetId) {
+    console.warn('details-toggle missing data-target on', btn);
+    return;
+  }
+
+  const region = document.getElementById(targetId);
+  if (!region) {
+    console.warn(`No element found with id="${targetId}"`);
+    return;
+  }
+
+  // current expanded state
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  const willExpand = !expanded;
+
+  // update a11y attributes
+  btn.setAttribute('aria-expanded', willExpand ? 'true' : 'false');
+  region.setAttribute('aria-hidden', willExpand ? 'false' : 'true');
+
+  // show/hide with animation
+  if (willExpand) {
+    // ensure visible before reading scrollHeight
+    region.classList.add('open');
+    region.style.display = 'block';
+    // allow layout to update then animate max-height
+    const fullHeight = region.scrollHeight;
+    // set to 0 first to trigger transition in case it was 0 already
+    region.style.maxHeight = '0px';
+    requestAnimationFrame(() => {
+      region.style.maxHeight = fullHeight + 'px';
+    });
+    // optional: focus the region for screen-reader users
+    region.setAttribute('tabindex', '-1');
+    region.focus({ preventScroll: true });
+  } else {
+    // collapse
+    const fullHeight = region.scrollHeight;
+    // set explicit height then animate to 0
+    region.style.maxHeight = fullHeight + 'px';
+    requestAnimationFrame(() => {
+      region.style.maxHeight = '0px';
+    });
+    // after transition ends, hide fully to avoid tab stops / layout issues
+    const onTransitionEnd = (ev) => {
+      if (ev.propertyName === 'max-height') {
+        region.classList.remove('open');
+        region.style.display = 'none';
+        region.removeEventListener('transitionend', onTransitionEnd);
+      }
+    };
+    region.addEventListener('transitionend', onTransitionEnd);
+  }
+});
+</script>
+</body>
+</html>

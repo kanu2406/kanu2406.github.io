@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kanupriya — Contact</title>
+
+  <!-- main stylesheet & icons -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    .contact-wrapper {
+      max-width: 700px;
+      margin: 6rem auto 4rem;
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    .contact-wrapper h1 {
+      font-size: 1.8rem;
+      color: var(--text-color);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-subtext {
+      color: var(--subtext-color);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    /* contact card */
+    .contact-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(2,6,23,0.06);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .contact-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .contact-links a:hover {
+      color: var(--accent-color);
+      transform: scale(1.05);
+    }
+
+    .social-icons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.4rem;
+    }
+
+    .social-icons a {
+      font-size: 1.3rem;
+      color: var(--subtext-color);
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-note {
+      color: var(--subtext-color);
+      font-size: 0.9rem;
+      margin-top: 2.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar" role="navigation">
+    <div class="nav-container">
+      <div class="brand nav-brand">Kanupriya</div>
+      <div class="nav-actions">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="experience.html" class="nav-link">Experience</a></li>
+          <li><a href="education.html" class="nav-link">Education</a></li>
+          <li><a href="skills.html" class="nav-link">Skills</a></li>
+          <li><a href="contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="contact-wrapper">
+    <h1>Get in Touch</h1>
+    <p class="contact-subtext">
+      I'm always open to connecting about research, collaborations, or opportunities in AI and data science. 
+      Feel free to reach out. I’d love to hear from you!
+    </p>
+
+    <div class="contact-card">
+      <div class="contact-links">
+        <a href="mailto:kanupriya.jain@dauphine.edu"><i class="fas fa-envelope"></i> kanupriya.jain@dauphine.edu</a>
+        <a href="https://www.linkedin.com/in/kanupriya-jain-719781200/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/kanu2406" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+      </div>
+
+      <div class="social-icons">
+        <a href="https://github.com/kanu2406" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/kanupriya-jain-719781200/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:kanupriya.jain@dauphine.edu" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+
+      <p class="footer-note">📍 Based in Paris, France | Available worldwide</p>
+    </div>
+
+    <div style="margin-top:1.6rem; color:var(--subtext-color); font-size:0.95rem;">
+      <a href="index.html" style="color:var(--accent-color); text-decoration:none;">← Back to home</a>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

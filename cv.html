@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kanupriya Jain — CV</title>
+
+  <!-- use your existing site stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- small, local CSS overrides for CV (print-friendly) -->
+  <style>
+    /* CV layout container */
+    .cv {
+      max-width: 900px;
+      margin: 6rem auto 4rem;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.06);
+      color: var(--text-color);
+    }
+
+    .cv-header {
+      display:flex;
+      gap:1.2rem;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom: 1rem;
+    }
+
+    .cv-name {
+      font-size:1.8rem;
+      font-weight:800;
+      color:var(--text-color);
+    }
+
+    .cv-contact {
+      text-align:right;
+      font-size:0.95rem;
+      color:var(--subtext-color);
+    }
+    .cv-contact a { color:var(--accent-color); text-decoration:none; }
+    .cv-contact a:hover { text-decoration:underline; }
+
+    .summary {
+      margin: 0.8rem 0 1.2rem;
+      color: var(--subtext-color);
+      font-size:1rem;
+    }
+
+    .section {
+      margin:1.2rem 0;
+    }
+    .section h3 {
+      font-size:1.05rem;
+      margin-bottom:0.6rem;
+      color:var(--text-color);
+    }
+
+    .highlights {
+      display:flex;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+    .highlight {
+      background:var(--tag-bg);
+      color:var(--accent-color);
+      padding:0.6rem 0.9rem;
+      border-radius:10px;
+      font-weight:600;
+      font-size:0.95rem;
+    }
+
+    .job {
+      margin:0.6rem 0 0.9rem;
+    }
+    .job .meta {
+      color:var(--subtext-color);
+      font-weight:600;
+      margin-bottom:0.25rem;
+    }
+    .job ul {
+      margin-left:1rem;
+      color:var(--text-color);
+    }
+    .job li { margin:0.25rem 0; }
+
+    .projects-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:1rem;
+    }
+    .project {
+      background: rgba(0,0,0,0.02);
+      padding:0.9rem;
+      border-radius:8px;
+    }
+    .label { color:var(--subtext-color); font-size:0.9rem; }
+
+    /* Skills inline chips */
+    .skills { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .skill { background:var(--tag-bg); color:var(--accent-color);
+      padding:0.4rem 0.7rem; border-radius:8px; font-weight:600; font-size:0.9rem; }
+
+    /* Print styles */
+    @media print {
+      body { background: white; }
+      .cv { box-shadow:none; border-radius:0; margin:0; padding:0.6in; }
+      .theme-toggle, .navbar { display:none; }
+      a::after { content: " (" attr(href) ")"; font-size:0.85em; color: #000; }
+    }
+
+    /* small screen */
+    @media (max-width:720px) {
+      .cv { margin: 4rem 1rem; padding:1rem; }
+      .cv-contact { text-align:left; margin-top:0.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Optional: include your navbar or minimal top link -->
+  <nav class="navbar" style="position:fixed;top:8px;left:8px;right:8px;">
+    <div class="nav-container">
+      <div><a href="index.html" style="font-weight:700;color:var(--accent-color);text-decoration:none;">← Home</a></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <main class="cv" role="main" aria-labelledby="cv-name">
+    <header class="cv-header">
+      <div>
+        <div id="cv-name" class="cv-name">Kanupriya Jain</div>
+        <div class="label">M2 Artificial Intelligence, Systems & Data — PSL University (IASD)</div>
+      </div>
+
+      <aside class="cv-contact">
+        <div><a href="mailto:kanupriya.jain@dauphine.eu">kanupriya.jain@dauphine.eu</a></div>
+        <div>+33 7 45 76 76 46</div>
+        <div><a href="https://github.com/kanu2406" target="_blank">github.com/kanu2406</a> · <a href="http://www.linkedin.com/in/kanupriya-jain-719781200" target="_blank">linkedin.com/in/kanupriya-jain</a></div>
+        <div style="margin-top:0.6rem;"><a href="assets/Jain.Kanupriya.CV.pdf" download>Download PDF</a></div>
+      </aside>
+    </header>
+
+    <p class="summary">
+      M2 AI / Applied Math student combining mathematical foundations with machine learning to build robust, interpretable models for real-world data.
+      Open to research internships and collaborations.
+    </p>
+
+    <section class="section">
+      <h3>Selected highlights</h3>
+      <div class="highlights">
+        <div class="highlight">Efficient Mean Estimation under LDP — Criteo AI Labs (Apr–Oct 2025)</div>
+        <div class="highlight">Active Learning Implementations — Sorbonne LPSM (Jun–Aug 2024)</div>
+        <div class="highlight">Adversarial Robustness & MixedNUTS — Project (Dec 2024)</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Experience</h3>
+
+      <div class="job">
+        <div class="meta">Research Intern — Criteo AI Labs · Apr 2025 – Oct 2025</div>
+        <ul>
+          <li>Developed algorithms for efficient mean estimation under user-level local differential privacy using adaptive noisy binary search.</li>
+          <li>Proved finite-sample (non-asymptotic) bounds on mean-squared error in univariate & multivariate settings.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="meta">Research Intern — LPSM, Sorbonne Université · Jun 2024 – Aug 2024</div>
+        <ul>
+          <li>Implemented three active learning algorithms (QBC, Rejection, Uncertainty Sampling) from research papers and benchmarked on synthetic and real datasets.</li>
+          <li>Compared performance vs library baselines and reported empirical findings.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="meta">Summer Intern — Dept. of Mathematics, IIT Guwahati · Jun 2022</div>
+        <ul>
+          <li>Worked on theoretical topics in functional analysis; used SageMath for symbolic verification.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Projects</h3>
+      <div class="projects-grid">
+        <div class="project">
+          <div class="meta">Adversarial Robustness (Dec 2024) — <a href="https://github.com/kanu2406/Adversarial-Attacks-" target="_blank">repo</a></div>
+          <div>Implemented FGSM/PGD + AutoAttack evaluation; experimented with MixedNUTS fusion to improve accuracy-robustness trade-off.</div>
+        </div>
+
+        <div class="project">
+          <div class="meta">Recommender Systems (Oct 2024) — <a href="https://github.com/kanu2406/Recommender-Systems" target="_blank">repo</a></div>
+          <div>Built collaborative filtering with ALS and neural CF; evaluated on (dataset) and reported top-N metrics.</div>
+        </div>
+
+        <div class="project">
+          <div class="meta">Airbnb Price Prediction (Apr 2024) — <a href="https://github.com/kanu2406/AirBnb-Price-Prediction" target="_blank">repo</a></div>
+          <div>Performed EDA, feature engineering and compared Ridge/Lasso/ENet, XGBoost, NN; selected robust ensemble.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Education</h3>
+      <div class="job">
+        <div class="meta">PSL University — M2 Artificial Intelligence, Systems, Data (IASD) · 2024–2025</div>
+        <div class="label">Relevant coursework: Optimization for ML · Deep Learning for Image Analysis · LLMs · Big Data for ML</div>
+      </div>
+
+      <div class="job">
+        <div class="meta">École Polytechnique — M1 Applied Mathematics & Statistics · 2023–2024</div>
+        <div class="label">Grade: 15.80/20 — Relevant coursework: ML, Probability, Optimization</div>
+      </div>
+
+      <div class="job">
+        <div class="meta">St. Stephen's College, DU — B.Sc. (Hons.) Mathematics · 2020–2023</div>
+        <div class="label">Grade: 9.67/10</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Skills</h3>
+      <div class="skills" aria-hidden="false">
+        <!-- group: Programming -->
+        <div class="skill">Python</div>
+        <div class="skill">NumPy</div>
+        <div class="skill">Pandas</div>
+        <div class="skill">PyTorch</div>
+        <div class="skill">TensorFlow</div>
+        <div class="skill">SQL</div>
+        <div class="skill">C++</div>
+        <div class="skill">R</div>
+        <div class="skill">SageMath</div>
+        <div class="skill">Docker</div>
+        <div class="skill">GCP</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Awards & Leadership</h3>
+      <ul>
+        <li>Excellence Prairie Scholarship — Dauphine-PSL (M2).</li>
+        <li>Dr. PB Bhattacharya Memorial Prize — 1st rank in B.Sc. (H) Mathematics.</li>
+        <li>Council Member & General Secretary — St. Stephen’s (positions of responsibility).</li>
+      </ul>
+    </section>
+
+    <footer style="margin-top:1.4rem; color:var(--subtext-color); font-size:0.95rem;">
+      <div>Last updated: 2025</div>
+    </footer>
+  </main>
+</body>
+</html>

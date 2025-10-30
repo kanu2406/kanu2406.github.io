@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kanupriya — Experience</title>
+
+  <!-- site stylesheet & icons -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ==== Page layout ==== */
+    .page-wrapper {
+      max-width: 980px;
+      margin: 5.6rem auto 4rem;
+      padding: 0 1rem;
+    }
+    .page-header { margin-bottom: 1.6rem; }
+    .page-header h1 { font-size: 1.9rem; color:var(--text-color); margin:0 0 .25rem 0; }
+    .page-header p { color:var(--subtext-color); margin:0 0 .8rem 0; }
+
+    /* ==== Timeline / entries ==== */
+    .timeline {
+      position: relative;
+      margin-left: 0.6rem;
+      padding-left: 1.05rem;
+      border-left: 3px dashed rgba(0,0,0,0.06);
+    }
+
+    .exp-item {
+      position: relative;
+      margin-bottom: 2.4rem;
+      padding: 1rem 0 0 1.2rem;
+      transition: transform .18s ease, box-shadow .18s ease;
+      background: transparent;
+      padding-left: 0;
+    }
+
+    .exp-item .dot {
+      position: absolute;
+      left: -1.48rem;
+      top: 0.6rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      box-shadow: 0 3px 10px rgba(2,6,23,0.06);
+    }
+
+    .exp-head {
+      display:flex;
+      align-items:baseline;
+      gap:0.8rem;
+      flex-wrap:wrap;
+      margin-bottom:0.4rem;
+    }
+    .role { font-weight:700; color:var(--text-color); font-size:1.02rem; }
+    .org { color:var(--subtext-color); font-weight:600; }
+    .duration { margin-left:auto; color:var(--subtext-color); font-size:0.95rem; }
+
+    .exp-sub { color:var(--subtext-color); margin-bottom:0.6rem; }
+
+    .exp-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 0.9rem 0.0rem;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.03);
+      transition: transform .18s ease, box-shadow .18s ease;
+      box-sizing: border-box;           /* ensure padding included in width */
+      width: calc(100% + 1.2rem);       /* extend by the left padding value */
+      margin-left: -1.2rem;             /* pull it left to align with page content */
+      padding: 0.9rem 1rem;             /* keep your existing internal padding */
+      margin-left: 0;
+    }
+    .exp-card details {
+      display: block;
+      width: 100%;
+    }
+    .exp-card details summary {
+      display: block;
+      width: 100%;
+      padding-right: 0;
+    }
+    .exp-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(2,6,23,0.06); }
+
+    .exp-bullets { margin: 0.55rem 0 0 0; color:var(--text-color); line-height:1.45; }
+    .exp-bullets li { margin-bottom:0.45rem; }
+
+    /* ---------- FIX BULLET ALIGNMENT INSIDE DETAILS ---------- */
+    .exp-card details ul,
+    .exp-bullets {
+      list-style: disc inside;   /* keep bullets inside the card */
+      margin: 0.6rem 0 0 1.2rem; /* slight left indent for readability */
+      padding-left: 0;           /* reset browser defaults */
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    .exp-card details li,
+    .exp-bullets li {
+      margin-bottom: 0.45rem;
+    }
+
+
+    /* tech/tag links in experience */
+    .tech-tags { margin-top:0.75rem; display:flex; gap:0.45rem; flex-wrap:wrap; }
+    .tech-tag {
+      text-decoration:none;
+      display:inline-block;
+      padding:0.35rem 0.65rem;
+      border-radius:999px;
+      background:var(--tag-bg);
+      color:var(--accent-color);
+      font-weight:600;
+      font-size:0.86rem;
+      transition: transform .12s ease, background .18s ease;
+    }
+    .tech-tag:hover { transform:scale(1.06); background:var(--tag-hover); }
+
+    /* details summary style */
+    details summary {
+      cursor: pointer;
+      font-weight:700;
+      color:var(--accent-color);
+      margin-top:0.6rem;
+      list-style:none;
+      padding-right:1.2rem;
+    }
+
+    /* ===== Positions of responsibility badges ===== */
+    .por {
+      margin-top:2rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.6rem;
+      align-items:center;
+    }
+    .por .badge {
+      background:var(--card-bg);
+      border-radius:10px;
+      padding:0.45rem 0.8rem;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+      color:var(--text-color);
+      font-weight:700;
+      display:inline-flex;
+      gap:0.5rem;
+      align-items:center;
+      transition: transform .14s ease;
+    }
+    .por .badge:hover { transform: translateY(-4px); }
+
+    /* small utilities */
+    .meta-link { color:var(--subtext-color); text-decoration:none; font-weight:600; }
+    .meta-link:hover { color:var(--accent-color); }
+
+    /* responsive */
+    @media (max-width:700px) {
+      .exp-head { display:block; }
+      .duration { margin-top:0.25rem; }
+      .exp-card { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- top navbar -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <div class="brand nav-brand">Kanupriya</div>
+
+      <div class="nav-actions">
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="projects.html" class="nav-link">Projects</a></li>
+          <li><a href="experience.html" class="nav-link">Experience</a></li>
+          <li><a href="education.html" class="nav-link">Education</a></li>
+          <li><a href="skills.html" class="nav-link">Skills</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- main content -->
+  <main class="page-wrapper" role="main">
+    <header class="page-header">
+      <h1>Experiences</h1>
+    </header>
+
+    <section class="timeline" aria-label="Work experience timeline">
+
+      <!-- Criteo -->
+      <article class="exp-item" id="criteo">
+        <div class="dot" aria-hidden="true"></div>
+
+        <div class="exp-head">
+          <div>
+            <div class="role">Research Intern — Privacy for Machine Learning</div>
+            <div class="org"><a class="meta-link" href="https://ailab.criteo.com/" target="_blank" rel="noopener">Criteo AI Labs</a></div>
+            <div class="location">Paris, France</div>
+            <br />
+            <div>GitHub Repository:<a class="repo-link" href="https://github.com/kanu2406/DAME-BS" target="_blank" rel="noopener" title="View code on GitHub">
+            <i class="fab fa-github"></i>
+            </a></div>
+            
+          </div>
+          <div class="duration">Apr 2025 — Oct 2025</div>
+
+          
+          </a>
+        </div>
+
+        <div class="exp-sub">Worked on private algorithms for efficient mean estimation under user-level local differential privacy.</div>
+
+        <div class="exp-card" role="article" aria-labelledby="criteo">
+          <details>
+            <summary>Show details</summary>
+            <ul class="exp-bullets">
+              <li>Designed an adaptive localization algorithm that uses <strong>noisy binary search</strong> for efficient mean estimation under user-level LDP.</li>
+              <li>Proved non-asymptotic bounds on expected squared error (finite-sample guarantees) for both univariate and multivariate settings.</li>
+              <li>Implemented experiments, produced reproducible notebooks, and evaluated empirical MSE vs theoretical bounds.</li>
+            </ul>
+
+            <div class="tech-tags" aria-hidden="true">
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Differential Privacy</a>
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Python</a>
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Statistical Theory</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- LPSM -->
+      <article class="exp-item" id="lpsm">
+        <div class="dot" aria-hidden="true"></div>
+
+        <div class="exp-head">
+          <div>
+            <div class="role">Research Intern — Study of Active Learning Algorithms</div>
+            <div class="org"><a class="meta-link" href="https://www.lpsm.paris/" target="_blank" rel="noopener">LPSM, Sorbonne Université</a></div>
+            <div class="location">Paris, France</div>
+            <br />
+            <div>GitHub Repository:<a class="repo-link" href="https://github.com/kanu2406/Internship-in-Active-Learning-Algorithms" target="_blank" rel="noopener" title="View code on GitHub">
+            <i class="fab fa-github"></i>
+            </a></div>
+          </div>
+          <div class="duration">Jun 2024 — Aug 2024</div>
+          
+        </div>
+
+        <div class="exp-sub">This internship focused on the study and implementation of various Active Learning Algorithms for binary classification problems.
+          Studied and implemented three Active Learning methods for binary classification — Active Learning with Rejection, Uncertainty Sampling, and Query by Committee based on a paper by my supervisor
+          Prof Christophe Denis. These were all implemented from scratch and benchmarked against passive and Bayes classifiers.</div>
+
+        <div class="exp-card" role="article" aria-labelledby="lpsm">
+          <details>
+            <summary>Show details</summary>
+            <ul class="exp-bullets">
+              <li>Implemented Query-by-Committee (QBC), Rejection Method, and Uncertainty Sampling from primary literature.</li>
+              <li>Built evaluation pipelines to compare custom implementations with off-the-shelf libraries across synthetic and non-synthetic datasets.</li>
+              <li>Analyzed sample efficiency and label complexity; produced plots and reproducible scripts.</li>
+            </ul>
+
+            <div class="tech-tags" aria-hidden="true">
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Active Learning</a>
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Python</a>
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Reproducible Research</a>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- IIT Guwahati -->
+      <article class="exp-item" id="iitg">
+        <div class="dot" aria-hidden="true"></div>
+
+        <div class="exp-head">
+          <div>
+            <div class="role">Summer Intern — Department of Mathematics</div>
+            <div class="org"><span class="meta-link",href="https://www.iitg.ac.in/">Indian Institute of Technology, Guwahati</span></div>
+            <div class="location">Guwahati, India</div>
+          </div>
+          <div class="duration">Jun 2022</div>
+        </div>
+
+        <div class="exp-sub">Explored functional analysis, Baire Category, and related topics under Prof. Anjan Kumar Chakrabarty.</div>
+
+        <div class="exp-card" role="article" aria-labelledby="iitg">
+          <details>
+            <summary>Show details</summary>
+            <ul class="exp-bullets">
+              <li>Studied normed vector spaces, proved supporting lemmas, and worked with the Baire Category Theorem / Open Mapping Theorem.</li>
+              <li>Prepared notes and computational examples to bridge analysis theory with small experiments in SageMath.</li>
+            </ul>
+
+            <div class="tech-tags" aria-hidden="true">
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Functional Analysis</a>
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Real Analysis</a>
+              <a class="tech-tag" href="#" target="_blank" rel="noopener">Abstract Mathematics</a>
+            </div>
+          </details>
+        </div>
+      </article>
+    </section>
+
+    
+    <!-- ===== Positions of responsibility (improved) ===== -->
+    <section class="por" aria-labelledby="por-title" style="margin-top:1.4rem;">
+      <h2 id="por-title" style="width:100%; margin-bottom:0.6rem; color:var(--text-color); font-size:1.05rem;">
+        Positions of responsibility
+      </h2>
+
+      <!-- short explanatory line -->
+      <p class="por-intro" style="color:var(--subtext-color); margin-bottom:0.8rem; max-width:760px;">
+        These are student-run clubs and committees I was active in during my B.Sc. at St. Stephen's College where I organized events, led teams,
+        and supported campus activities outside the classroom.
+      </p>
+
+      <div class="por-list" aria-hidden="false">
+        <div class="badge" title="Council Member — Computer Science Society">
+          <span class="badge-emoji">🏫</span>
+          <span class="badge-content">
+            <strong>Council Member</strong>
+            <span class="badge-sub"> — Computer Science Society, St. Stephen's College</span>
+            <span class="badge-date"> (Aug 2021 – Jun 2023)</span>
+          </span>
+        </div>
+
+        <div class="badge" title="General Secretary — Japanese Society">
+          <span class="badge-emoji">🗂️</span>
+          <span class="badge-content">
+            <strong>General Secretary</strong>
+            <span class="badge-sub"> — Japanese Society, St. Stephen's College</span>
+            <span class="badge-date"> (Jun 2021 – Jun 2023)</span>
+          </span>
+        </div>
+
+        <div class="badge" title="Member — Campus Placement Cell">
+          <span class="badge-emoji">🔗</span>
+          <span class="badge-content">
+            <strong>Member</strong>
+            <span class="badge-sub"> — Campus Placement Cell, St. Stephen's College</span>
+            <span class="badge-date"> (Dec 2020 – Apr 2021)</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="extracurriculars" aria-labelledby="ec-title" style="margin-top:1.6rem;">
+      <h2 id="ec-title" class="section-title">Beyond Academics</h2>
+      <p class="ec-intro">
+        Outside academics, I pursue the arts to balance my analytical and creative sides.
+      </p>
+
+      <div class="ec-grid">
+        <div class="ec-card" title="Kathak Dance">
+          <div class="ec-icon">💃</div>
+          <div class="ec-text">
+            <h3>Classical Dance</h3>
+            <p>Completed <strong>4 years of Kathak training</strong> with annual examinations and stage performances.</p>
+          </div>
+        </div>
+
+        <div class="ec-card" title="Art Page">
+          <div class="ec-icon">🎨</div>
+          <div class="ec-text">
+            <h3>Art & Illustration</h3>
+            <p>I enjoy exploring art as a form of expression and mindfulness.  
+          You can <a href="https://www.instagram.com/kanupriya2406/" target="_blank" class="ec-link">see some of my artwork here</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <div style="margin-top:1.6rem; color:var(--subtext-color); font-size:0.95rem;">
+      <a href="index.html" style="color:var(--accent-color); text-decoration:none;">← Back to home</a>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

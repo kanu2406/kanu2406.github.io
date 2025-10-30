@@ -1,1 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>kanupriya</title>
 
+  <!-- main stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <!-- BRAND (not a hyperlink) -->
+    <div class="brand nav-brand" aria-hidden="false">Kanupriya</div>
+
+    <!-- NAV ACTIONS: links + theme toggle grouped so spacing is easy to control -->
+    <div class="nav-actions" role="group" aria-label="Navigation links and theme toggle">
+      <ul class="nav-menu" role="menu" aria-hidden="false">
+        <li role="none"><a role="menuitem" href="index.html" class="nav-link">Home</a></li>
+        <li role="none"><a role="menuitem" href="projects.html" class="nav-link">Projects</a></li>
+        <li role="none"><a role="menuitem" href="experience.html" class="nav-link">Experience</a></li>
+        <li role="none"><a role="menuitem" href="education.html" class="nav-link">Education</a></li>
+        <li role="none"><a role="menuitem" href="skills.html" class="nav-link">Skills</a></li>
+        <li role="none"><a role="menuitem" href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- HERO -->
+  <header class="hero-section" id="home" role="banner">
+    <div class="hero-content container">
+      <div class="hero-image" aria-hidden="true">
+        <img src="assets/img/profile.jpg" alt="Kanupriya — photo" class="profile-img" />
+      </div>
+
+      <div class="hero-text">
+        <h1 class="hero-title">Kanupriya Jain</h1>
+        <p class="hero-subtitle">M2 Artificial Intelligence & Data Science (IASD)</p>
+        <p class="hero-institution">PSL University (Mines, ENS and Dauphine)</p>
+
+        <!-- <div class="dynamic-text" aria-live="polite">
+          <span id="rotating-text">AI Researcher</span>
+        </div> -->
+
+        <p class="hero-description">
+          I recently completed an M2 in Artificial Intelligence & Data Science from PSL University (Mines, ENS and Dauphine) and an M1 in Applied Mathematics & Statistics from École Polytechnique, IP Paris. 
+          I enjoy exploring applied mathematics with practical machine learning to develop interpretable, robust models for real-world problems. Open to research internships, PhD positions, and applied ML roles.
+        </p>
+
+        <div class="hero-ctas" style="margin-top:1rem;">
+          <a class="btn btn-primary" href="assets/Jain.Kanupriya.CV.pdf" download aria-label="Download CV">Download CV</a>
+          <a class="btn btn-secondary" href="contact.html" aria-label="Contact page">Contact</a>
+        </div>
+
+        <div class="interest-tags" aria-hidden="true">
+          <span>Optimization</span>
+          <span>Machine Learning</span>
+          <span>Statistics</span>
+          <span>Privacy</span>
+        </div>
+
+        <!-- <p class="current-focus">
+          🔬 <strong>Currently exploring:</strong> Explainable AI for constrained optimization
+        </p> -->
+      </div>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true"><i class="fas fa-chevron-down"></i></div>
+  </header>
+
+ 
+
+  <!-- PROJECTS PREVIEW -->
+  <section class="section container" id="projects-preview" aria-labelledby="projects-title">
+    <h2 id="projects-title">Featured projects</h2>
+    <div class="projects-grid">
+      <a class="project-card card" href="projects.html#proj-adv" title="Adversarial Robustness">
+        <div class="project-header">
+          <span class="project-date">Dec 2024</span>
+          <span class="project-cat">Robustness</span>
+        </div>
+        <h3>Adversarial Attacks & Defense Mechanisms</h3>
+        <p class="muted">Implemented FGSM & PGD attacks and defenses and evaluated with AutoAttack and 
+          experimented with MixedNUTS to improve accuracy–robustness trade-off.
+        </p>
+      </a>
+
+      <a class="project-card card" href="projects.html#proj-cf" title="Recommender Systems">
+        <div class="project-header">
+          <span class="project-date">Oct 2024</span>
+          <span class="project-cat">Collaborative Filtering </span>
+        </div>
+        <h3>Recommender Systems</h3>
+        <p class="muted">Built a recommender system with matrix factorization Built ALS, PMF (Bayesian), and Neural Collaborative Filtering to predict user ratings for movies.</p>
+      </a>
+
+      <a class="project-card card" href="projects.html#proj-gmgan" title="Gaussian Mixture GANs (GM-GAN)">
+        <div class="project-header">
+          <span class="project-date">Nov 2024</span>
+          <span class="project-cat">Image Generation</span>
+        </div>
+        <h3>Gaussian Mixture GANs (GM-GAN)</h3>
+        <p class="muted"> Experiments with Gaussian mixture latent priors and supervised variants to improve sample diversity and quality. </p>
+      </a>
+    </div>
+    <div class="cta-row">
+      <a href="projects.html" class="btn btn-secondary">See all projects</a>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE SNAPSHOT -->
+  <section class="section alt container" id="experience-snapshot" aria-labelledby="exp-title">
+    <h2 id="exp-title">Experience snapshot</h2>
+    <div class="projects-grid">
+
+      <a class="project-card card" href="projects.html#proj-damebs" title="Differentially Private Mean Estimation">
+      <div class="card">
+        <h3>Criteo AI Labs — Research Intern</h3>
+        <p class="muted">Apr 2025 – Oct 2025</p>
+        <ul>
+          <li>Worked on algorithms for mean estimation under user-level local differential privacy using noisy binary search for localization phase.</li>
+          <li>Proved non-asymptotic bounds on expected squared error for both univariate and multivariate settings.</li>
+        </ul>
+      </div>
+      </a>
+
+      <a class="project-card card" href="projects.html#proj-activelearning" title="Active Learning Algorithms">
+      <div class="card">
+        <h3>LPSM, Sorbonne University — Research Intern</h3>
+        <p class="muted">Jun 2024 – Aug 2024</p>
+        <ul>
+          <li>Studied and implementated three Active Learning Algorithms for binary classification problems— Active Learning with Rejection, Uncertainty Sampling, and Query by Committee based
+             on a paper by my supervisor Prof Christophe Denis and benchmarked against passive and Bayes classifiers.</li>
+        </ul>
+      </div>
+    </a>
+    </div>
+    <div class="cta-row">
+      <a href="experience.html" class="btn btn-secondary">See all experiences</a>
+    </div>
+  </section>
+
+  <!-- SKILLS (compact) -->
+  <section class="section container" id="skills" aria-labelledby="skills-title">
+    <h2 id="skills-title">Skills</h2>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Programming & Tools</h4>
+        <div class="skills">
+          <span class="skill">Python</span>
+          <span class="skill">NumPy</span>
+          <span class="skill">Pandas</span>
+          <span class="skill">Git</span>
+          <span class="skill">Scala</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>ML & Frameworks</h4>
+        <div class="skills">
+          <span class="skill">PyTorch</span>
+          <span class="skill">TensorFlow</span>
+          <span class="skill">Scikit-learn</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Math & Methods</h4>
+        <div class="skills">
+          <span class="skill">Optimization</span>
+          <span class="skill">Probability</span>
+          <span class="skill">Statistics</span>
+        </div>
+      </div>
+    </div>
+    <div class="cta-row">
+      <a href="skills.html" class="btn btn-secondary">See all skills</a>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section class="section contact-cta container" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Let’s collaborate</h2>
+    <p class="muted">Open to research based positions, PhD opportunities, and collaborations. Email: <a href="mailto:kanupriya.jain@dauphine.eu">kanupriya.jain@dauphine.eu</a></p>
+    
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2025 Kanupriya</div>
+      <!-- <div><a href="assets/Jain.Kanupriya.CV.pdf" download>Download CV</a></div> -->
+      <div class="socials">
+      <a href="https://github.com/kanu2406" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/kanupriya-jain-719781200" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:kanupriya.jain@dauphine.eu" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
