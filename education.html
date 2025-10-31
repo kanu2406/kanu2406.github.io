@@ -153,7 +153,7 @@
     <div class="brand nav-brand" aria-hidden="false">Kanupriya</div>
 
     <!-- NAV ACTIONS: links + theme toggle grouped so spacing is easy to control -->
-    <div class="nav-actions" role="group" aria-label="Navigation links and theme toggle">
+    <!-- <div class="nav-actions" role="group" aria-label="Navigation links and theme toggle">
       <ul class="nav-menu" role="menu" aria-hidden="false">
         <li role="none"><a role="menuitem" href="index.html" class="nav-link">Home</a></li>
         <li role="none"><a role="menuitem" href="projects.html" class="nav-link">Projects</a></li>
@@ -168,7 +168,36 @@
       </button>
     </div>
   </div>
-  </nav>
+  </nav> -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-container">
+    <!-- BRAND (not a hyperlink) -->
+    <div class="brand nav-brand" aria-hidden="false">Kanupriya</div>
+
+    <!-- hamburger for mobile -->
+    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- NAV ACTIONS: links + theme toggle grouped so spacing is easy to control -->
+    <div class="nav-actions" role="group" aria-label="Navigation links and theme toggle">
+      <ul id="primary-menu" class="nav-menu" role="menu" aria-hidden="false">
+        <li role="none"><a role="menuitem" href="index.html" class="nav-link">Home</a></li>
+        <li role="none"><a role="menuitem" href="projects.html" class="nav-link">Projects</a></li>
+        <li role="none"><a role="menuitem" href="experience.html" class="nav-link">Experience</a></li>
+        <li role="none"><a role="menuitem" href="education.html" class="nav-link">Education</a></li>
+        <li role="none"><a role="menuitem" href="skills.html" class="nav-link">Skills</a></li>
+        <li role="none"><a role="menuitem" href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</nav>
 
   <!-- MAIN CONTENT -->
   <main class="page-wrapper">

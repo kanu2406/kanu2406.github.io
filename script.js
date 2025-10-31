@@ -169,3 +169,74 @@
   // Recompute nav height after fonts/images load (safer)
   window.addEventListener('load', setNavHeightVar);
 })();
+
+// ===== mobile nav toggle + nav-height + accessibility =====
+(function () {
+  const nav = document.getElementById('navbar');
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('primary-menu'); // changed id per HTML
+  const navLinks = navMenu ? Array.from(navMenu.querySelectorAll('a')) : [];
+
+  function setNavHeightVar() {
+    if (!nav) return;
+    const height = nav.offsetHeight || 72;
+    document.documentElement.style.setProperty('--nav-height', height + 'px');
+  }
+
+  function openMenu(open) {
+    if (!navMenu || !navToggle) return;
+    const willOpen = (typeof open === 'boolean') ? open : !navMenu.classList.contains('open');
+    if (willOpen) {
+      navMenu.classList.add('open');
+      navToggle.classList.add('open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      navMenu.setAttribute('aria-hidden', 'false');
+      // trap focus? (simple approach: focus first link)
+      const firstLink = navMenu.querySelector('a');
+      if (firstLink) firstLink.focus({ preventScroll: true });
+    } else {
+      navMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navMenu.setAttribute('aria-hidden', 'true');
+      // return focus to toggle
+      navToggle.focus({ preventScroll: true });
+    }
+    // recalc nav height slightly after open/close
+    setTimeout(setNavHeightVar, 120);
+  }
+
+  // attach toggle handler
+  if (navToggle) {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openMenu();
+    });
+  }
+
+  // close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navMenu) return;
+    if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+      openMenu(false);
+    }
+  });
+
+  // close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') openMenu(false);
+  });
+
+  // close menu on link click (useful for single-page anchors too)
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      // small delay so link navigation can begin
+      setTimeout(() => openMenu(false), 60);
+    });
+  });
+
+  // update nav height on load/resize (for scroll offset)
+  window.addEventListener('resize', setNavHeightVar);
+  window.addEventListener('load', setNavHeightVar);
+  setNavHeightVar();
+})();
