@@ -108,3 +108,64 @@
     console.error('Education helpers failed:', err);
   }
 })();
+
+
+// ===== scroll-indicator + dynamic nav offset helper =====
+(function () {
+  // set CSS var --nav-height based on current navbar height
+  function setNavHeightVar() {
+    const nav = document.getElementById('navbar');
+    const fallback = '80px';
+    if (nav) {
+      const h = nav.offsetHeight;
+      document.documentElement.style.setProperty('--nav-height', h + 'px');
+    } else {
+      document.documentElement.style.setProperty('--nav-height', fallback);
+    }
+  }
+
+  // hide/fade scroll indicator on scroll and remove on small screens
+  function bindScrollIndicator() {
+    const indicator = document.querySelector('.scroll-indicator');
+    if (!indicator) return;
+
+    // initial hide on small screens
+    if (window.innerWidth <= 760) {
+      indicator.style.display = 'none';
+    } else {
+      indicator.style.display = '';
+    }
+
+    let lastY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      // if scrolled down beyond 60px, fade out; otherwise show
+      if (y > 60) {
+        indicator.style.opacity = '0';
+        indicator.style.transform = 'translateX(-50%) translateY(6px)';
+      } else {
+        indicator.style.opacity = '1';
+        indicator.style.transform = 'translateX(-50%) translateY(0)';
+      }
+      lastY = y;
+    });
+
+    // update on resize: hide on small screens or show on large
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 760) {
+        indicator.style.display = 'none';
+      } else {
+        indicator.style.display = '';
+      }
+      // recalc nav height in case layout changed
+      setNavHeightVar();
+    });
+  }
+
+  // run on load
+  setNavHeightVar();
+  bindScrollIndicator();
+
+  // Recompute nav height after fonts/images load (safer)
+  window.addEventListener('load', setNavHeightVar);
+})();

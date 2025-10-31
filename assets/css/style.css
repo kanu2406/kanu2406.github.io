@@ -37,6 +37,42 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* -------- improved scroll indicator -------- */
+.scroll-indicator {
+  position: absolute;
+  /* keep it slightly above the bottom edge and safe-area aware for mobile */
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;               /* above most page elements but below modal-like things */
+  pointer-events: none;     /* avoid intercepting clicks on small screens */
+  font-size: 1.1rem;
+  color: var(--accent-color);
+  background: rgba(255,255,255,0.02); /* subtle background — won't steal attention */
+  padding: 6px 8px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+  opacity: 1;
+  transition: opacity 0.32s ease, transform 0.32s ease;
+  animation: bounce 2s infinite;
+}
+
+/* reduce size and make unobtrusive on dark/light themes */
+body.light .scroll-indicator { background: rgba(15,23,42,0.03); }
+body.dark-mode .scroll-indicator { background: rgba(255,255,255,0.02); }
+
+/* hide or remove on very small screens where it interferes */
+@media (max-width: 760px) {
+  .scroll-indicator { display: none; }
+}
+
+/* keep bounce small so it doesn't overlap UI */
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%     { transform: translate(-50%, 8px); }
+}
+
+
 /* ---------- Navbar ---------- */
 .navbar {
   position: fixed;
